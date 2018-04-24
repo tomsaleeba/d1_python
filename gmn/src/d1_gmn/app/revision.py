@@ -117,7 +117,10 @@ def get_sid_by_pid(pid):
   Preconditions:
   - {pid} is verified to exist. E.g., with d1_gmn.app.views.asserts.is_existing_object().
   """
-  return d1_gmn.app.did.get_did_by_foreign_key(_get_chain_by_pid(pid).sid)
+  chain = _get_chain_by_pid(pid)
+  if chain is None:
+    return None
+  return d1_gmn.app.did.get_did_by_foreign_key(chain.sid)
 
 
 def set_revision_links(sciobj_model, obsoletes_pid=None, obsoleted_by_pid=None):
